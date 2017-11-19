@@ -6,7 +6,7 @@
 	<groupId>br.com.uniplus</groupId>
 	<artifactId>materialmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>materialmanager</name>
 	<description>Demo project for Spring Boot</description>
@@ -96,11 +96,17 @@
 			<artifactId>jquery</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 	<build>
+		<finalName>materialmanager</finalName>
 		<plugins>
-			<!-- Package as an executable jar/war -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

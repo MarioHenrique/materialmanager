@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base :: css-import"></head>
+<body>
+	<div th:replace="fragments/menu :: menu"></div>
+
+	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Materia</th>
+					<th scope="col">Semestre</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="turma : ${turmas}">
+					<td th:text="${turma.materia}"></td>
+					<td th:text="${turma.semestre + 'º Semestre'}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<a th:href="@{/turmas/nova}" class="btn btn-success">Nova turma</a>
+	</div>
+	
+	
+	<div th:replace="fragments/base :: js-import"></div>
+</body>
+</html>

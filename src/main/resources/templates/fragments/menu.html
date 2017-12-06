@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+	<div th:fragment="menu">
+		<form id="logoutForm" method="POST" th:action="logout"></form>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">MaterialManager</a>
+				</div>
+
+				<div sec:authorize="hasAuthority('TEACHER')">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/home}">Home</a></li>
+						<li><a th:href="@{/turmas}">Turmas</a></li>
+					</ul>
+				</div>
+				
+				<div sec:authorize="hasAuthority('STUDENT')">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/home}">Home</a></li>
+						<li><a th:href="@{/materiais}">Materias</a></li>
+						<li><a th:href="@{/notificacoes}">Notificações</a></li>
+					</ul>
+				</div>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"
+						onclick="document.forms['logoutForm'].submit()">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>

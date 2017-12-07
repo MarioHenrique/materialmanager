@@ -2,6 +2,7 @@ package br.com.uniplus.materialmanager.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import br.com.uniplus.materialmanager.dto.response.ConviteResponse;
 import br.com.uniplus.materialmanager.entities.Convite;
 import br.com.uniplus.materialmanager.entities.Turma;
 import br.com.uniplus.materialmanager.entities.User;
+import br.com.uniplus.materialmanager.exception.UserAlreadyExistException;
 import br.com.uniplus.materialmanager.exception.UserNotFoundException;
 import br.com.uniplus.materialmanager.repository.ConviteRepository;
 import br.com.uniplus.materialmanager.repository.TurmaRepository;
@@ -32,11 +34,16 @@ public class AlunoService {
 	@Autowired
 	private ConviteRepository conviteRepository;
 	
-	public void enviarConvite(ConviteRequest request, Long turmaId) throws UserNotFoundException {
+	public void enviarConvite(ConviteRequest request, Long turmaId) throws UserNotFoundException, UserAlreadyExistException {
 		
 		User student = userRepository.findByUsername(request.getEmail());
 		if(student == null) {
 			throw new UserNotFoundException();
+		}
+		
+		Optional<Turma> turmaRepetida = student.getTurmas().stream().filter(s->s.getId().equals(turmaId)).findFirst();
+		if(turmaRepetida.isPresent()) {
+			throw new UserAlreadyExistException();
 		}
 		
 		String currentUser = getCurrentUser();

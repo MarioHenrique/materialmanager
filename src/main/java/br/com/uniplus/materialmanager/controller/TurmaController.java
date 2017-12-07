@@ -18,6 +18,7 @@ import br.com.uniplus.materialmanager.dto.request.TurmaDTO;
 import br.com.uniplus.materialmanager.dto.request.RemocaoTurmaRequest;
 import br.com.uniplus.materialmanager.dto.request.RespostaConviteRequest;
 import br.com.uniplus.materialmanager.dto.response.TurmaResponse;
+import br.com.uniplus.materialmanager.exception.UserAlreadyExistException;
 import br.com.uniplus.materialmanager.exception.UserNotFoundException;
 import br.com.uniplus.materialmanager.services.AlunoService;
 import br.com.uniplus.materialmanager.services.TurmaService;
@@ -131,6 +132,8 @@ public class TurmaController {
 			model.addObject("message","Convite enviado !");
 		} catch (UserNotFoundException e) {
 			model.addObject("error","Aluno não localizado !");
+		} catch(UserAlreadyExistException e) {
+			model.addObject("error","Aluno já adicionado na turma !");
 		}
 		return model;
 	}

@@ -11,7 +11,7 @@
 						<h3 class="panel-title">Nova turma</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" th:action="@{/turmas}" method="POST">
+						<form role="form" th:action="@{/turmas/editar}" method="POST">
 							<fieldset>
 
 								<div th:if="${error}">
@@ -43,7 +43,7 @@
 									</select>
 								</div>
 
-								<button type="submit" class="btn btn-success">Criar</button>
+								<button type="submit" class="btn btn-success">Editar</button>
 								<a th:href="@{/turmas}" class="btn btn-default">Cancelar</a>
 
 							</fieldset>

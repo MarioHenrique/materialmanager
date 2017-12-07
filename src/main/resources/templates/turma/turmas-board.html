@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/base :: css-import"></head>
+<body>
+	<div th:replace="fragments/menu :: menu"></div>
+	<div
+		class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Material</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<div sec:authorize="hasAuthority('TEACHER')">
+				<a href="#" class="btn btn-success">Novo Material</a>
+				<a th:href="@{/turmas}" class="btn btn-default">Voltar</a>
+				<a th:href="@{/turmas/convite}" class="btn btn-success pull-right">Convidar aluno</a>
+			</div>
+			<div sec:authorize="hasAuthority('STUDENT')">
+				<a th:href="@{/turmas}" class="btn btn-default">Voltar</a>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/base :: js-import"></div>
+</body>
+</html>

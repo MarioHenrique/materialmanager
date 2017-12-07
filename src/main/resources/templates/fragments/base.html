@@ -2,15 +2,15 @@
 <head th:fragment="css-import">
 <meta charset="UTF-8" />
 <link rel="stylesheet" type="text/css"
-	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/login.css" />
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
 </head>
 <body>
 	<div th:fragment="js-import">
 		<script type="text/javascript"
-			src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+			th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 		<script type="text/javascript"
-			src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	</div>
 </body>
 </html>

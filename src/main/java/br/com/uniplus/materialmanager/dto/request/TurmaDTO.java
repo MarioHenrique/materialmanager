@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class NovaTurmaDTO {
+public class TurmaDTO {
 
 	@NotEmpty(message="É preciso passar o nome da materia")
 	private String materia;

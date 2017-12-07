@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class TurmaResponse {
 
+	private Long id;
 	private String materia;
 	private String teacher;
 	private Integer semestre; 
@@ -15,6 +16,7 @@ public class TurmaResponse {
 		turmaResponse.setMateria(turma.getMateria());
 		turmaResponse.setTeacher(turma.getTeacher().getName());
 		turmaResponse.setSemestre(turma.getSemestre());
+		turmaResponse.setId(turma.getId());
 		return turmaResponse;
 	}
 	

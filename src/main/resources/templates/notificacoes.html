@@ -2,8 +2,59 @@
 <head th:replace="fragments/base :: css-import"></head>
 <body>
 	<div th:replace="fragments/menu :: menu"></div>
+	<div
+		class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+		<p class="h3">Convites</p>
+		
+		<form id="formAceitar" method="POST" th:action="@{/turmas/convite/resposta}">
+		 	<input type="hidden" name="resposta" value="true"></input>
+		 	<input type="hidden" id="conviteAceitoId" name="conviteId"></input> 
+		</form>
+		<form id="formNegar" method="POST" th:action="@{/turmas/convite/resposta}">
+			<input type="hidden" name="resposta" value="false"></input>
+			<input type="hidden" id="conviteNegadoId" name="conviteId"></input>
+		</form>
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Materia</th>
+					<th scope="col">Professor</th>
+					<th scope="col">Semestre</th>
+					<th scope="col">Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="convite : ${convites}">
+					<td th:text="${convite.materia}"></td>
+					<td th:text="${convite.professor}"></td>
+					<td th:text="${convite.semestre + 'º Semestre'}"></td>
+					<td>
+					    <a href="#" th:onclick="'aceitar('+${convite.id}+')'" title="aceitar"><span class="glyphicon glyphicon-ok"></span></a>
+						<a href="#" th:onclick="'negar('+${convite.id}+')'" title="Negar"><span class="glyphicon glyphicon-remove"></span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	
+	<script type="text/javascript">
+		function setId(inputId,conviteId){
+			var convite = document.getElementById(inputId);
+			convite.setAttribute("value",conviteId);
+		}
 	
+		function negar(id){
+			setId('conviteNegadoId',id);
+			document.forms['formNegar'].submit();
+		}
+		
+		function aceitar(id){
+			setId('conviteAceitoId',id);
+			document.forms['formAceitar'].submit();
+		}
+	
+	</script>
 	
 	<div th:replace="fragments/base :: js-import"></div>
 </body>

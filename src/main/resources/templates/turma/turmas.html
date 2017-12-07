@@ -1,27 +1,77 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments/base :: css-import"></head>
 <body>
 	<div th:replace="fragments/menu :: menu"></div>
 
-	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Materia</th>
-					<th scope="col">Semestre</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="turma : ${turmas}">
-					<td th:text="${turma.materia}"></td>
-					<td th:text="${turma.semestre + 'º Semestre'}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<a th:href="@{/turmas/nova}" class="btn btn-success">Nova turma</a>
+	<div
+		class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+
+		<form id="removerTurmaId" method="POST"
+			th:action="@{/turmas/remove}">
+			<input type="hidden" id="turmaRemocaoId" name="turmaId"></input>
+		</form>
+
+		<div sec:authorize="hasAuthority('TEACHER')">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Materia</th>
+						<th scope="col">Semestre</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="turma : ${turmas}">
+						<td th:text="${turma.materia}"></td>
+						<td th:text="${turma.semestre + 'º Semestre'}"></td>
+						<td><a th:href="@{'/turmas/board?id=' + ${turma.id}}"
+							title="Acessar"><span class="glyphicon glyphicon-search"></span></a>
+							<a th:href="@{'/turmas/editar?id=' + ${turma.id}}" title="Editar"><span
+								class="glyphicon glyphicon-edit"></span></a> <a
+							th:onclick="'remover('+${turma.id}+')'" title="Remover"><span
+								class="glyphicon glyphicon-remove"></span></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<a th:href="@{/turmas/nova}" class="btn btn-success">Nova turma</a>
+		</div>
+
+		<div sec:authorize="hasAuthority('STUDENT')">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Materia</th>
+						<th scope="col">Semestre</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="turma : ${turmas}">
+						<td th:text="${turma.materia}"></td>
+						<td th:text="${turma.semestre + 'º Semestre'}"></td>
+						<td><a th:href="@{'/turmas/board?id=' + ${turma.id}}"
+							title="Acessar"><span class="glyphicon glyphicon-search"></span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	
-	
+
+	<script type="text/javascript">
+		function setId(inputId, conviteId) {
+			var convite = document.getElementById(inputId);
+			convite.setAttribute("value", conviteId);
+		}
+
+		function remover(id) {
+			setId('turmaRemocaoId', id);
+			document.forms['removerTurmaId'].submit();
+		}
+
+	</script>
+
 	<div th:replace="fragments/base :: js-import"></div>
 </body>
 </html>

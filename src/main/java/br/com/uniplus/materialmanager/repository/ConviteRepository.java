@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.uniplus.materialmanager.entities.Turma;
+import br.com.uniplus.materialmanager.entities.Convite;
 
 @Repository
-public interface TurmaRepository extends CrudRepository<Turma, Long> {
+public interface ConviteRepository extends CrudRepository<Convite, Long> {
 
-	List<Turma> findByTeacherIdAndArquivadaIsFalse(Long id);
+	List<Convite> findByStudentIdAndVisualizadoIsFalse(Long studentId);
 	
 }

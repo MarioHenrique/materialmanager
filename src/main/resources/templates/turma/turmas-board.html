@@ -3,33 +3,99 @@
 <head th:replace="fragments/base :: css-import"></head>
 <body>
 	<div th:replace="fragments/menu :: menu"></div>
+
+	<form id="removerMaterialId" method="POST"
+		th:action="@{/turmas/material/remove}">
+		<input type="hidden" id="materialRemocaoId" name="materialId"></input>
+	</form>
+
 	<div
 		class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
 		<div class="row">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Material</th>
-						<th scope="col">Descrição</th>
-						<th scope="col">Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-
-				</tbody>
-			</table>
+			<h2>Materias</h2>
+			<div sec:authorize="hasAuthority('TEACHER')">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Material</th>
+							<th scope="col">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="material : ${materiais}">
+							<td th:text="${material.name}"></td>
+							<td><a th:href="${material.link}" title="Download"
+								target="_blank"><span
+									class="glyphicon glyphicon glyphicon-download"></span></a> <a
+								th:onclick="'remover('+${material.id}+')'" title="Remover"><span
+									class="glyphicon glyphicon-remove"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div sec:authorize="hasAuthority('STUDENT')">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Material</th>
+							<th scope="col">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="material : ${materiais}">
+							<td th:text="${material.name}"></td>
+							<td><a th:href="${material.link}" title="Download"
+								target="_blank"><span
+									class="glyphicon glyphicon glyphicon-download"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+
 		<div class="row">
 			<div sec:authorize="hasAuthority('TEACHER')">
-				<a href="#" class="btn btn-success">Novo Material</a>
-				<a th:href="@{/turmas}" class="btn btn-default">Voltar</a>
-				<a th:href="@{/turmas/convite}" class="btn btn-success pull-right">Convidar aluno</a>
+				<a th:href="@{/turmas/material}" class="btn btn-success">Novo
+					Material</a> <a th:href="@{/turmas}" class="btn btn-default">Voltar</a>
+				<a th:href="@{/turmas/convite}" class="btn btn-success pull-right">Convidar
+					aluno</a>
 			</div>
 			<div sec:authorize="hasAuthority('STUDENT')">
 				<a th:href="@{/turmas}" class="btn btn-default">Voltar</a>
 			</div>
 		</div>
+		<br/>
+		<h2>Alunos da turma</h2>
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Aluno</th>
+						<th scope="col">Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="aluno : ${turma.alunos}">
+						<td th:text="${aluno.nome}"></td>
+						<td th:text="${aluno.email}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
+
+	<script type="text/javascript">
+		function setId(inputId, conviteId) {
+			var convite = document.getElementById(inputId);
+			convite.setAttribute("value", conviteId);
+		}
+
+		function remover(id) {
+			setId('materialRemocaoId', id);
+			document.forms['removerMaterialId'].submit();
+		}
+	</script>
+
 	<div th:replace="fragments/base :: js-import"></div>
 </body>
 </html>

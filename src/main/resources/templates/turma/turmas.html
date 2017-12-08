@@ -7,8 +7,7 @@
 	<div
 		class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
 
-		<form id="removerTurmaId" method="POST"
-			th:action="@{/turmas/remove}">
+		<form id="removerTurmaId" method="POST" th:action="@{/turmas/remove}">
 			<input type="hidden" id="turmaRemocaoId" name="turmaId"></input>
 		</form>
 
@@ -41,6 +40,7 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<th scope="col">Professor</th>
 						<th scope="col">Materia</th>
 						<th scope="col">Semestre</th>
 						<th scope="col">Ações</th>
@@ -48,6 +48,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="turma : ${turmas}">
+						<td th:text="${turma.teacher}"></td>
 						<td th:text="${turma.materia}"></td>
 						<td th:text="${turma.semestre + 'º Semestre'}"></td>
 						<td><a th:href="@{'/turmas/board?id=' + ${turma.id}}"
@@ -69,7 +70,6 @@
 			setId('turmaRemocaoId', id);
 			document.forms['removerTurmaId'].submit();
 		}
-
 	</script>
 
 	<div th:replace="fragments/base :: js-import"></div>

@@ -81,8 +81,9 @@ public class AlunoService {
 		String currentUser = getCurrentUser();
 		User user = userRepository.findByUsername(currentUser);
 		
+		Optional<Turma> turmaExistente = user.getTurmas().stream().filter(t-> t.getId().equals(convite.getTurma().getId())).findFirst();
 		
-		if(request.getResposta().equals(Boolean.TRUE)) {
+		if(!turmaExistente.isPresent() && request.getResposta().equals(Boolean.TRUE)) {
 			Turma turma = convite.getTurma();
 			user.getTurmas().add(turma);
 			userRepository.save(user);
